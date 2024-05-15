@@ -39,8 +39,12 @@ When('informar um email que já está cadastrado', function () {
         error: 'User already exists.',
       },
     }
-  ).as('postUserError');
+  ).as('postUser');
   paginaCadastro.typeEmail(fakerPT_BR.internet.email());
+});
+
+When('informar o nome {string}', function (nome) {
+  paginaCadastro.typeNome(nome);
 });
 
 Then('o usuário será cadastrado com sucesso', function () {
@@ -53,7 +57,7 @@ Then('irei visualizar o erro de formulário {string}', function (mensagem) {
 });
 
 Then('irei visualizar a mensagem de erro {string}', function (mensagem) {
-  cy.wait('@postUserError');
+  cy.wait('@postUser');
   cy.get(paginaCadastro.modalErro).contains(mensagem);
   cy.get(paginaCadastro.buttonCancelar).should('be.visible');
 });
